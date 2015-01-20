@@ -42,7 +42,7 @@ public class DiffXMLTest {
   public final void testSimpleDiff() {
     Diff d = DiffFactory.createDiff();
     try {
-      d.diff(new File("test1a.xml"), new File("test2a.xml"));
+      d.diff(new File("src/examples/test1a.xml"), new File("src/examples/test2a.xml"));
     } catch (DiffException e) {
       fail("An exception was thrown during the diff: " + e.getMessage());
     }

@@ -36,11 +36,8 @@ public class SuiteRunner {
   private static final String SUITE_DIR = "suite";
 
   @Parameterized.Parameters(name = "{index}: {2}")
-  public static Collection<Object[]> data() throws URISyntaxException {
-    URL resource = SuiteRunner.class.getClassLoader().getResource(SUITE_DIR + "/suite.txt");
-    if (resource == null)
-      throw new IllegalStateException("No suite found");
-    File suiteDir = new File(resource.toURI()).getParentFile();
+  public static Collection<Object[]> data() throws FileNotFoundException {
+    File suiteDir = getSuiteFile(SUITE_DIR + "/suite.txt").getParentFile();
     Collection<Object[]> objects = new ArrayList<Object[]>();
     for (File fA : suiteDir.listFiles(new FilesEndAFilter())) {
       File fB = new File(fA.getAbsolutePath().replace("A.xml", "B.xml"));
@@ -133,5 +130,15 @@ public class SuiteRunner {
     }
   }
 
+  public static File getSuiteFile(String name) throws FileNotFoundException {
+    URL resource = SuiteRunner.class.getClassLoader().getResource(name);
+    if (resource == null)
+      throw new FileNotFoundException(name);
+    try {
+      return new File(resource.toURI());
+    } catch (URISyntaxException e) {
+      throw new IllegalArgumentException(name, e);
+    }
+  }
 }
 

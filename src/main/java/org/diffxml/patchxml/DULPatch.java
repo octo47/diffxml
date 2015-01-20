@@ -222,10 +222,8 @@ public class DULPatch {
     //Handle appending nodes
     if (xPathIndex < xpathcn) {
       domIndex++;
-      xPathIndex++;
     }
 
-    assert domIndex == xPathIndex;
     return domIndex;
   }
 
